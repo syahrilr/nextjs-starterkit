@@ -1,0 +1,107 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+  previewFeatures = ["driverAdapters"]
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+// Define enums
+enum Role {
+  member
+  admin
+}
+
+enum AccountType {
+  email
+  google
+  github
+}
+
+// Users table
+model User {
+  id               Int               @id @default(autoincrement())
+  username         String?           @unique
+  email            String            @unique
+  emailVerified    DateTime?         @map("emailVerified")
+  accounts         Account[]
+  profiles         Profile?
+  resetToken       ResetToken?
+  verifyEmailToken VerifyEmailToken?
+  sessions         Session[]
+}
+
+// Accounts table
+model Account {
+  id          Int         @id @default(autoincrement())
+  userId      Int
+  accountType AccountType
+  githubId    String?     @unique
+  googleId    String?     @unique
+  password    String?
+  salt        String?
+  user        User        @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId, accountType])
+}
+
+// MagicLinks table
+model MagicLink {
+  id             Int       @id @default(autoincrement())
+  email          String    @unique
+  token          String?
+  tokenExpiresAt DateTime?
+
+  @@index([token])
+}
+
+// ResetTokens table
+model ResetToken {
+  id             Int       @id @default(autoincrement())
+  userId         Int       @unique
+  token          String?
+  tokenExpiresAt DateTime?
+  user           User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([token])
+}
+
+// VerifyEmailTokens table
+model VerifyEmailToken {
+  id             Int       @id @default(autoincrement())
+  userId         Int       @unique
+  token          String?
+  tokenExpiresAt DateTime?
+  user           User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([token])
+}
+
+// Profiles table
+model Profile {
+  id          Int     @id @default(autoincrement())
+  userId      Int     @unique
+  displayName String?
+  imageId     String?
+  image       String?
+  bio         String  @default("")
+  user        User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+// Sessions table
+model Session {
+  id        String   @id
+  userId    Int
+  expiresAt DateTime @map("expires_at")
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+}
