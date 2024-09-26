@@ -4,7 +4,7 @@ import { Lucia, Session, User } from "lucia";
 import { env } from "../../env/server";
 import { cookies } from "next/headers";
 import { UserId as CustomUserId } from "@/constants/types"; 
-import { Google } from "arctic";
+import { GitHub, Google } from "arctic";
 
 const adapter = new PrismaAdapter(db.session, db.user)
 
@@ -71,4 +71,9 @@ export const googleAuth = new Google(
     env.GOOGLE_CLIENT_ID,
     env.GOOGLE_CLIENT_SECRET,
     `${env.HOST_NAME}/api/login/google/callback`
+);
+
+export const github = new GitHub(
+    env.GITHUB_CLIENT_ID,
+    env.GITHUB_CLIENT_SECRET
 );

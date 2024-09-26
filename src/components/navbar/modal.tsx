@@ -28,7 +28,7 @@ export default function Modal({ className }: ModalProps) {
       <nav className="mx-auto flex items-center justify-between">
         <div>
           <Button
-            variant="ghost"
+            variant="outline"
             onClick={() => openDialog("signin")}
             className={cn("w-full", className)}
           >

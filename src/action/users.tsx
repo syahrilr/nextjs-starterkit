@@ -1,25 +1,26 @@
 import crypto from "crypto";
 
-
-
 import { GoogleUser } from "@/app/api/login/google/callback/route";
 import { UserId } from "@/constants/types";
 import { db } from "@/lib/prisma";
 
-
-
-import { createAccount, createAccountViaGoogle, getAccountByUserId } from "./account";
+import {
+  createAccount,
+  createAccountViaGithub,
+  createAccountViaGoogle,
+  getAccountByUserId,
+} from "./account";
 import { LoginError, PublicError } from "./error";
 import { createProfile, updateProfile } from "./profile";
 import { createVerifyEmailToken } from "./verify-email";
-
+import { GitHubUser } from "@/app/api/login/github/callback/route";
 
 const ITERATIONS = 10000;
 
 export async function getUserByEmail(email: string) {
   const user = await db.user.findFirst({
     where: {
-      email
+      email,
     },
   });
 
@@ -36,12 +37,9 @@ export async function getUserById(id: number) {
   return user;
 }
 
-
 export async function signInUseCase(email: string, password: string) {
-  
   const user = await getUserByEmail(email);
   console.log(user);
-  
 
   if (!user) {
     throw new LoginError();
@@ -53,7 +51,7 @@ export async function signInUseCase(email: string, password: string) {
     throw new LoginError();
   }
 
-  return { id: user.id};
+  return { id: user.id };
 }
 
 async function hashPassword(plainTextPassword: string, salt: string) {
@@ -96,7 +94,7 @@ export async function verifyPassword(email: string, plainTextPassword: string) {
   return account.password == hash;
 }
 
-export async function createUser(email: string, username: string) {
+export async function createUser(email: string, username?: string) {
   const user = await db.user.create({
     data: {
       username,
@@ -153,6 +151,7 @@ export async function getProfile(userId: UserId) {
     select: {
       displayName: true,
       image: true,
+      bio: true,
     },
   });
 
@@ -178,4 +177,18 @@ export async function updateProfileNameUseCase(
 
 export async function updateProfileBioUseCase(userId: UserId, bio: string) {
   await updateProfile(userId, { bio });
+}
+
+export async function createGithubUserUseCase(githubUser: GitHubUser) {
+  let existingUser = await getUserByEmail(githubUser.email);
+
+  if (!existingUser) {
+    existingUser = await createUser(githubUser.email);
+  }
+
+  await createAccountViaGithub(existingUser.id, githubUser.id);
+
+  await createProfile(existingUser.id, githubUser.login, githubUser.avatar_url);
+
+  return existingUser.id;
 }

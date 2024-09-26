@@ -40,10 +40,11 @@ const Navbar = async () => {
           >
             <Menu orientation="mobile" />
             <div className="mt-3 flex-col space-y-3">
-              {user ? <SignOutButton /> :(
+              {user ? (
+                <SignOutButton />
+              ) : (
                 <div className="flex w-full items-center justify-center">
-
-                  <Modal className="flex items-center w-full justify-center" />
+                  <Modal className="flex w-full items-center justify-center" />
                 </div>
               )}
             </div>
@@ -72,9 +73,7 @@ const Navbar = async () => {
                   <Link href={"/dashboard"}>Dashboard</Link>
                 </DropdownMenuItem>
                 <DropdownMenuSeparator />
-                <DropdownMenuItem>
-                  <SignOutButton />
-                </DropdownMenuItem>
+                <SignOutButton />
               </DropdownMenuContent>
             </DropdownMenu>
           ) : (

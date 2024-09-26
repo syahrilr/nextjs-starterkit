@@ -20,7 +20,7 @@ export function ConfigurationPanel({
         }
       )}
     >
-      <div className="rounded-t-md border-b sm:px-6 md:py-3 bg-primary">
+      <div className="rounded-t-md border-b sm:px-6 md:py-3 bg-gradient-to-r from-primary to-secondary">
         <span className="mb-4 text-base font-medium sm:text-lg">{title}</span>
       </div>
       <div className="p-4 sm:px-6">

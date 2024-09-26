@@ -65,3 +65,28 @@ export async function createAccountViaGoogle(userId: UserId, googleId: string) {
         }
     })
 }
+
+export async function createAccountViaGithub(userId: UserId, githubId: string) {
+    await db.account.create({
+        data: {
+            userId: userId,
+            githubId: githubId.toString(),
+            accountType: "github"
+        }
+    })
+
+    
+}
+
+export async function getAccountByGithubId(githubId: string) {
+    return await db.account.findFirst({
+        where: {
+            githubId: githubId.toString()
+        }
+    })
+}
+
+
+export async function getAccountByGithubIdUseCase(githubId: string) {
+    return await getAccountByGithubId(githubId);
+}

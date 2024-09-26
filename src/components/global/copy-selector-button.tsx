@@ -17,6 +17,7 @@ const CopySelector = ({ description }: ApiAlertProps) => {
     toast({
       title: "Success",
       description: "Copied to clipboard",
+      variant: "success",
     });
   };
   return (

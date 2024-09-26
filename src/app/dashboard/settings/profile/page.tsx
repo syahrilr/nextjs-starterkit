@@ -1,4 +1,4 @@
-import { cache } from "react";
+import { Suspense, cache } from "react";
 
 import { CalendarDays, Link as LinkIcon, MapPin } from "lucide-react";
 
@@ -9,6 +9,7 @@ import ProfileImage from "@/components/profile/profile-image";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Skeleton } from "@/components/ui/skeleton";
 
 import { ProfileName } from "./profile-name";
 
@@ -19,7 +20,7 @@ export default async function ProfilePage() {
     <div className="min-h-screen px-4 py-12 sm:px-6 lg:px-8">
       <Card className="mx-auto max-w-3xl">
         <CardHeader className="relative">
-          <div className="absolute left-0 top-0 h-32 w-full rounded-t-lg bg-gradient-to-r from-blue-500 to-purple-500" />
+          <div className="absolute left-0 top-0 h-32 w-full rounded-t-lg bg-gradient-to-r from-primary to-secondary" />
           <div className="relative px-4 pt-16 sm:px-6">
             <div className="flex items-center">
               <div className="rounded-full border-4 border-white">
@@ -73,6 +74,11 @@ export default async function ProfilePage() {
       <div className="mx-auto mt-10 max-w-3xl">
         <ConfigurationPanel title="Edit Profile">
           <ProfileName />
+          <Suspense
+            fallback={<Skeleton className="h-[400px] w-full rounded" />}
+          >
+            {/* <BioFormWrapper /> */}
+          </Suspense>
         </ConfigurationPanel>
       </div>
     </div>

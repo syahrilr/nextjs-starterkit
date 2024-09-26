@@ -42,7 +42,7 @@ const Menu = async ({ orientation }: MenuProps) => {
                 href={link.url}
                 className="font-medium text-primary dark:text-white"
               >
-                {link.title}
+                {link.title.toUpperCase()}
               </Link>
             </Button>
           ))}
@@ -59,7 +59,7 @@ const Menu = async ({ orientation }: MenuProps) => {
                 buttonVariants({
                   variant: "ghost",
                 }),
-                "w-full"
+                "w-full ease-in-out duration-300"
               )}
             >
               {link.title}

@@ -18,6 +18,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import { githubUrl } from "@/config/app-config";
 
 const features = [
   {
@@ -91,7 +92,7 @@ export default function LandingPage() {
               <Link href="#get-started">Get Started</Link>
             </Button>
             <Button size="lg" variant="outline" asChild>
-              <Link href="https://github.com">
+              <Link href={githubUrl}>
                 <Github className="mr-2 h-4 w-4" />
                 View on GitHub
               </Link>
@@ -127,7 +128,7 @@ export default function LandingPage() {
               <ol className="list-inside list-decimal space-y-4">
                 <li>
                   Clone to repository :
-                  <CopySelector description="git clone https://github.com/your-repo/nextjs-starter.git" />
+                  <CopySelector description={`git clone ${githubUrl}`} />
                 </li>
                 <li>
                   Install dependencies:
@@ -140,36 +141,13 @@ export default function LandingPage() {
               </ol>
               <div className="mt-6">
                 <Button size="lg" asChild>
-                  <Link href="https://github.com">Get the Starter Kit</Link>
+                  <Link href={githubUrl}>Get the Starter Kit</Link>
                 </Button>
               </div>
             </CardContent>
           </Card>
         </section>
       </main>
-      <footer className="mt-20 w-full rounded bg-opacity-75 p-6 px-4 py-12 shadow-lg backdrop-blur-md sm:px-6 lg:px-8">
-        <div className="mx-auto max-w-7xl">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center space-x-3">
-              <Zap className="h-8 w-8" />
-              <span className="text-xl font-bold">Next.js Starter</span>
-            </div>
-            <div className="flex space-x-6">
-              <Link href="https://github.com" className="hover:text-gray-300">
-                <span className="sr-only">GitHub</span>
-                <Github className="h-6 w-6" />
-              </Link>
-              <Link href="#" className="hover:text-gray-300">
-                <span className="sr-only">Website</span>
-                <Globe className="h-6 w-6" />
-              </Link>
-            </div>
-          </div>
-          <div className="mt-8 text-center text-muted-foreground">
-            © {new Date().getFullYear()} Next.js Starter. All rights reserved.
-          </div>
-        </div>
-      </footer>
     </div>
   );
 }

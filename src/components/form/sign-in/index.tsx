@@ -46,6 +46,7 @@ const SignInForm = () => {
       toast({
         title: "Success",
         description: "You have successfully logged in",
+        variant: "success",
       });
     },
   });
@@ -103,7 +104,7 @@ const SignInForm = () => {
                       type="button"
                       variant={"ghost"}
                       onClick={togglePasswordVisibility}
-                      className="absolute right-2 top-1/2 -translate-y-1/2 transform hover:bg-transparent hover:text-white"
+                      className="absolute right-2 top-1/2 -translate-y-1/2 transform hover:bg-transparent hover:text-muted-foreground"
                       aria-label="Toggle password visibility"
                     >
                       {isPasswordVisible ? (
@@ -155,7 +156,7 @@ const SignInForm = () => {
         Sign in with Google
       </Link>
       <Link
-        href={"/api/login/google"}
+        href={"/api/login/github"}
         className={cn(
           buttonVariants({
             variant: "secondary",

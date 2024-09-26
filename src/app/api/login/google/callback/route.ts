@@ -4,6 +4,7 @@ import { googleAuth } from "@/config/auth";
 import { createGoogleUserUseCase } from "@/action/users"; 
 import { getAccountByGoogleIdUseCase } from "@/action/account"; 
 import { setSession } from "@/lib/session"; 
+import { afterLoginUrl } from "@/config/app-config";
 
 export async function GET(request: Request): Promise<Response> {
     const url = new URL(request.url);
@@ -46,7 +47,7 @@ export async function GET(request: Request): Promise<Response> {
             return new Response(null, {
                 status: 302,
                 headers: {
-                    Location: "/dashboard",
+                    Location: afterLoginUrl,
                 },
             });
         }
@@ -56,7 +57,7 @@ export async function GET(request: Request): Promise<Response> {
         return new Response(null, {
             status: 302,
             headers: {
-                Location: "/dashboard",
+                Location: afterLoginUrl,
             },
         });
     } catch (e) {

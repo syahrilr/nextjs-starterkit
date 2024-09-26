@@ -7,7 +7,7 @@ import { useServerAction } from "zsa-react";
 
 import { useToast } from "@/hooks/use-toast";
 
-import { LoaderButton } from "../../../components/ui/loader-button";
+import { LoaderButton } from "@/components/ui/loader-button"; 
 import { updateProfileBioAction } from "./action";
 
 export function EditBioForm({ bio }: { bio: string }) {
@@ -23,7 +23,6 @@ export function EditBioForm({ bio }: { bio: string }) {
         }}
         content={bio}
         editable={true}
-        immediatelyRender={false}
       ></EditorProvider>
 
       <div className="flex justify-end">

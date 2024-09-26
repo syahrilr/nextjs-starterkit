@@ -48,6 +48,7 @@ const SignUpForm = () => {
       toast({
         title: "Success",
         description: "Account created successfully",
+        variant : "success",
       });
     },
   });
@@ -154,7 +155,7 @@ const SignUpForm = () => {
                       <Input
                         {...field}
                         className="w-full"
-                        placeholder="Enter Confirm your Password"
+                        placeholder="Confirm your Password"
                         type={isConfirmPassVisible ? "text" : "password"}
                       />
                       <Button
